@@ -78,13 +78,13 @@ class DataLoader():
         return image
 
     def resize(self, image, mask):      # random crop and resize to (256, 256)
-        # img = tf.concat([image, mask], axis=-1)
-        # img = tf.image.resize(img, (280, 280), method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)   # only NEAREST_NEIGHBOR !
-        # img = tf.image.random_crop(img, size=[256, 256, 4])
-        # return img[:, :, :3], img[:, :, 3:]
-        image = tf.image.resize(image, size=(256, 256), method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
-        mask = tf.image.resize(mask, size=(256, 256), method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
-        return image, mask
+        img = tf.concat([image, mask], axis=-1)
+        img = tf.image.resize(img, (280, 280), method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)   # only NEAREST_NEIGHBOR !
+        img = tf.image.random_crop(img, size=[256, 256, 4])
+        return img[:, :, :3], img[:, :, 3:]
+        # image = tf.image.resize(image, size=(256, 256), method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
+        # mask = tf.image.resize(mask, size=(256, 256), method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
+        # return image, mask
 
     def normalize(self, image, mask):   # normalize to [-1, +1]
         image = tf.cast(image, tf.float32) / 127.5 - 1

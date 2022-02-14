@@ -24,7 +24,7 @@ if __name__ == '__main__':
     DataLoader = DataLoader('./CityScapes/train/rgb/*.png', './CityScapes/train/seg/*.png',
                             './CityScapes/test/rgb/*.png', './CityScapes/test/seg/*.png')
 
-    BATCH_SIZE = 32
+    BATCH_SIZE = 1
     AUTO = tf.data.experimental.AUTOTUNE  # automatic load
     # load train set
     train_dataset_path = tf.data.Dataset.from_tensor_slices((DataLoader.train_rgb_path, DataLoader.train_seg_path))
@@ -37,16 +37,21 @@ if __name__ == '__main__':
 
     print('Training Dataset:\n', train_dataset)
 
-    # 3. Initialize the model
+    # 3. Reload the model
     model = UNET()
     model.summary()
+
     model.compile(optimizer=tf.keras.optimizers.Adam(0.0001),
                   loss='sparse_categorical_crossentropy',
                   metrics=['acc', UpdatedMeanIoU(num_classes=34)])
 
+    weights = tf.train.latest_checkpoint('./models')
+    model.load_weights(weights)
+
     # 4. Training
     EPOCHS = 80
     model_path = './models/model.ckpt'
+
     model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
                                 model_path, verbose=1, save_weights_only=True, period=1)
 

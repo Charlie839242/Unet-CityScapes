@@ -15,7 +15,7 @@ model.load_weights(weights).expect_partial()
 
 
 # Obtain input image
-img = tf.io.read_file('./CityScapes/test/rgb/0_rgb.png')
+img = tf.io.read_file('./CityScapes/test/rgb/17_rgb.png')
 img = tf.image.decode_png(img, channels=3)
 img = tf.image.resize(img, size=(256, 256), method=tf.image.ResizeMethod.NEAREST_NEIGHBOR)
 img = tf.cast(img, tf.float32) / 127.5 - 1
