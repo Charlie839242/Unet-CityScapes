@@ -46,7 +46,11 @@ if __name__ == '__main__':
 
     # 4. Training
     EPOCHS = 80
-    model_path = './models/model.ckpt'
+    # model_path = './models/model.ckpt'
+    # model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
+    #                             model_path, verbose=1, save_weights_only=True, period=1)
+
+    model_path = 'model_{epoch: 02d}.h5'
     model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
                                 model_path, verbose=1, save_weights_only=True, period=1)
 

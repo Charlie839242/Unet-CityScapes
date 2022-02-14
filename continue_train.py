@@ -38,7 +38,7 @@ if __name__ == '__main__':
     print('Training Dataset:\n', train_dataset)
 
     # 3. Reload the model
-    
+
     model = UNET()
     model.summary()
 
